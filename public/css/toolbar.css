@@ -1,0 +1,69 @@
+@import url(https://fonts.googleapis.com/css?family=Rokkitt:700);
+
+.navbar {
+    border-radius: 0px;
+    margin-bottom: 0px; 
+}
+
+.navbar-brand {
+    font-family: 'Rokkitt';
+}
+
+.navbar-default .navbar-brand {
+    color: white;
+    font-size: 25px;
+}
+
+.navbar-default .navbar-brand:visited {
+    color: white;
+}
+
+.navbar-default .navbar-brand:hover {
+    color: orange;
+}
+.navbar-default .navbar-nav>li>a {
+    color: white;
+}
+
+.navbar-default .navbar-nav>li>a:visited {
+    color: white;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: orange;
+}
+
+.navbar-default {
+    background: rgba(0,0,0,0.5);
+    border: none;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
+	background: rgba(220,220,220,0.2);
+	color: white;
+    border: none;
+}
+
+.dropdown-menu {
+	background: rgba(90,90,90,0.5);
+    border: none;
+    border-radius: 0;
+}
+
+.dropdown-menu>li>a {
+	background: rgba(0,0,0,0);
+	color: white;
+}
+
+.dropdown-menu>li>a:hover {
+	background: rgba(0,0,0,0);
+	color: orange;
+}
+
+.dropdown-menu .divider {
+	background: rgba(220,220,220,0.2);
+}
+
+#login-check:hover {
+	color: white;
+}

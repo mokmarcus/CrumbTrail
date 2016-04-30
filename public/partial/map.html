@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>CrumbTrail Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" > </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA86BXfeoMv0gZYdHbjps8ONT6TjZ6HS0I&libraries=places"></script>
+    <script type="text/javascript" src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/routeboxer/src/RouteBoxer.js"></script>
+    <link rel="stylesheet" href="../css/map.css" />
+    <link rel="stylesheet" href="../css/toolbar.css" type="text/css"/>
+    <script type="text/javascript" src="../js/map.js"></script>
+    <script type="text/javascript" src="../js/facebook.js">  </script>
+</head>
+        
+<body onload="init()">
+<!-- navbar  -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+        <a class="navbar-brand" href="../index.html"> CrumbTrail </a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="about.html"> About </a></li>
+        <li id="fb-login"><a id="login-check"> Checking Login Status... </a></li>
+    </ul>
+    </div>
+</nav>
+<div id="map_canvas"></div>
+<div id="right-panel">
+    <h2>Results</h2>
+    <ul id="places"></ul>
+    <button id="more">More results</button>
+</div>
+</body>
+</html>

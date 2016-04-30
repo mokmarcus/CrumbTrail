@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>CrumbTrail</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"> </script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" > </script>
+	<script src="https://cdn.jsdelivr.net/jquery.typeit/3.0.1/typeit.min.js"> </script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?&amp;libraries=places"></script>
+	<link rel="stylesheet" href="css/index.css" type="text/css"/>
+	<link rel="stylesheet" href="css/toolbar.css" type="text/css"/>
+	<script type="text/javascript" src="js/search.js">  </script>
+	<script type="text/javascript" src="js/facebook.js">  </script>
+</head>
+
+<body>
+<!-- navbar  -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="index.html"> CrumbTrail </a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+   		<li><a href="partial/about.html"> About </a></li>
+		<li id="fb-login"><a id="login-check"> Checking Login Status... </a></li>
+    </ul>
+  </div>
+</nav>
+<!-- typeit -->
+<div class="container" id="type-it-box">
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2" id="t">
+			<span class="type-it"></span>
+		</div>
+	</div>
+</div>
+<!-- inputs -->
+<div class="container input-box">
+	<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" id="input-wrap">
+		<div class="row">
+			<div class="col-md-12">
+				<input id="input-from" class="form-control input-bar" type="text" placeholder="Starting Point">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<input id="input-to" class="form-control input-bar" type="text" placeholder="Destination">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group input-bar">
+  					<select class="form-control" id="input-pref" onchange="getPref()">
+	  					<option value="" disabled selected>I want...</option>
+	  					<optgroup label="Cuisines">
+	  						<option>American</option>
+					    	<option>Chinese</option>
+					    	<option>French</option>
+					    	<option>Indian</option>
+					    	<option>Italian</option>
+					    	<option>Japanese</option>
+					    	<option>Mexican</option>
+					    	<option>Spanish</option>
+					    	<option>Thai</option>
+					    </optgroup>
+					    <optgroup label="Food items">
+					    	<option>Barbecue</option>
+					    	<option>Burgers</option>
+					    	<option>Burritos</option>
+					    	<option>Curry</option>
+					    	<option>Dimsum</option>
+					    	<option>Ice Cream</option>
+					    	<option>Noodles</option>
+					    	<option>Pasta</option>
+					    	<option>Pizza</option>
+					    	<option>Rice</option>
+					    	<option>Sandwiches</option>
+					    	<option>Sushi</option>
+					    	<option>Tacos</option>
+					    </optgroup>
+				  	</select>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

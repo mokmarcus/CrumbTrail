@@ -1,0 +1,45 @@
+@import url(https://fonts.googleapis.com/css?family=Rokkitt:700);
+
+body {
+    background-image: url("../img/background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+#type-it-box {
+    margin-top: 8%;
+    text-align: center;
+}
+
+h1 {
+    display: inline-block;
+}
+
+.type-it {
+    font-family: 'Rokkitt';
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    
+}
+
+.input-box {
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 3%;
+    text-align: center;
+    font-size: 15px;
+}
+
+#input-wrap {
+    background: rgba(156,156,156,0.50);
+    padding: 15px;
+}
+
+.input-bar {
+    margin-top: 7px;
+    margin-bottom: 7px; 
+}
+

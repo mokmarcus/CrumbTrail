@@ -1,0 +1,29 @@
+body {
+/*    height: 100%;
+    width: 100%;
+    background-image: url("../img/about_background.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;*/
+/*    background-origin: border-box;
+    background-clip: content-box; */ 
+}
+
+img {
+/*    height: 1000px;
+    width: 1000px;*/
+}
+
+#margin { 
+  
+}
+
+#text {
+    color: black;
+    font-size: 20px;
+    margin-top: 10%;
+}
+
+#collage {
+    margin-top: 5%;
+}

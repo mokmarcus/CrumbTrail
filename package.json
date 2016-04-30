@@ -1,7 +1,7 @@
 {
-  "name": "node-js-getting-started",
+  "name": "crumbtrail",
   "version": "0.2.5",
-  "description": "A sample Node.js app using Express 4",
+  "description": "A web application for anyone looking for a bite between two locations",
   "engines": {
     "node": "5.9.1"
   },
@@ -10,8 +10,11 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "ejs": "2.4.1",
-    "express": "4.13.3"
+    "ejs":"latest",
+    "express": "latest",
+    "mongodb": "latest",
+    "body-parser": "latest",
+    "validator":"latest"
   },
   "repository": {
     "type": "git",
