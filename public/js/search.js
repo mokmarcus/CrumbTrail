@@ -44,12 +44,9 @@ $(document).ready(function() {
     $(document).keypress(function(event){
         var keycode = (event.keyCode ? event.keyCode : event.which);
         if(keycode == '13'){
-            window.location.href = '../partial/map.html';
+            window.location.href = 'partial/map.html';
         }
     });
-
-    
-
 });
 
 function stopEvent(input) {
