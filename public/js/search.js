@@ -37,15 +37,9 @@ $(document).ready(function() {
         }
     });
     stopEvent(inputTo);
-    
-    // use this to get items --> JSON.parse(localStorage.getItem('inputs')));
 
-    //go to maps
-    $(document).keypress(function(event){
-        var keycode = (event.keyCode ? event.keyCode : event.which);
-        if(keycode == '13'){
+ $('#search').on('click', function(event) {
             window.location.href = 'partial/map.html';
-        }
     });
 });
 

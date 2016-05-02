@@ -20,6 +20,51 @@ app.use(function(req, res, next) {
   	next();
 });
 
+app.post('/search', function(request, response) {
+        var user = request.body.userID;
+        var start = request.body.startpoint;
+        var end = request.body.endpoint;
+        var d = new Date();
+        var toInsert = {
+                "userID": user,
+                "startpoint": start,
+                "endpoint" : end,
+                "date" : d
+        };
+        db.collection('searches', function(error, coll) {
+                var id = coll.insert(toInsert, function(error, saved) {
+                        if (error) {
+
+                                response.send(500);
+                        }
+                        else {
+                                response.send(200);
+                        }
+                });
+        });
+});
+
+
+app.get('/shree', function(request, response) {
+        response.set('Content-Type', 'text/html');
+        var indexPage = '';
+        db.collection('searches', function(er, collection) {
+                collection.find({"userID": request.body.userID}).toArray(function(err, cursor) {
+                        if (!err) {
+                                indexPage += "<!DOCTYPE HTML><html><head><title>Past Searches</title></head><body><h1>Part</h1>";
+                                for (var count = 0; count < cursor.length; count++) {
+                                        indexPage += "<p>Search from " + cursor[count].startpoint + "to" + cursor[count].endpoint + "</p>";
+                                }
+                                indexPage += "</body></html>"
+                                response.send(indexPage);
+                        } else {
+                                response.send('<!DOCTYPE HTML><html><head><title>Recent Searches</title></head><body><h1>Whoops, something went terribly wrong!</h1></body></html>');
+                        }
+                });
+        });
+});
+
+
 // views is directory for all template files
 app.set('views', __dirname + '/public');
 app.set('view engine', 'ejs');
