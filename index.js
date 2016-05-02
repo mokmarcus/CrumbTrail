@@ -34,26 +34,25 @@ app.post('/search', function(request, response) {
         db.collection('searches', function(error, coll) {
                 var id = coll.insert(toInsert, function(error, saved) {
                         if (error) {
-
                                 response.send(500);
                         }
                         else {
                                 response.send(200);
                         }
-                });
+            });
         });
 });
 
 
-app.get('/shree', function(request, response) {
+app.get('/past', function(request, response) {
         response.set('Content-Type', 'text/html');
         var indexPage = '';
         db.collection('searches', function(er, collection) {
                 collection.find({"userID": request.body.userID}).toArray(function(err, cursor) {
                         if (!err) {
-                                indexPage += "<!DOCTYPE HTML><html><head><title>Past Searches</title></head><body><h1>Part</h1>";
+                                indexPage += "<!DOCTYPE HTML><html><head><title>Past Searches</title></head><body><h1>Past Travels</h1>";
                                 for (var count = 0; count < cursor.length; count++) {
-                                        indexPage += "<p>Search from " + cursor[count].startpoint + "to" + cursor[count].endpoint + "</p>";
+                                        indexPage += "<p>Search from " + cursor[count].startpoint + "to" + cursour[count].endpoint + "</p>";
                                 }
                                 indexPage += "</body></html>"
                                 response.send(indexPage);
@@ -63,8 +62,6 @@ app.get('/shree', function(request, response) {
                 });
         });
 });
-
-
 // views is directory for all template files
 app.set('views', __dirname + '/public');
 app.set('view engine', 'ejs');
