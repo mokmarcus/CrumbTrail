@@ -53,8 +53,10 @@ function logged_out() {
 
 function logged_in() {
     FB.api('/me', function(response) {
-        ID = response.id;
-        localStorage.setItem('fbID', JSON.stringify(ID));
+        id = response.id;
+        console.log('hi');
+        console.log(id);
+        localStorage.setItem('fbID', JSON.stringify(id));
         var d = document.getElementById('fb-login')
         d.className += "dropdown";
         d.innerHTML =

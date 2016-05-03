@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-var mongoUri = process.env.MONGOLABURI || process.env.MONGOHQ_URL || 'mongodb://heroku_8h7s37g1:ko07p4amkieo3b2a9l9c026j72@ds047075.mlab.com:47075/heroku_8h7s37g1';
+var mongoUri = process.env.MONGOLABURI || process.env.MONGOHQ_URL || 'mongodb://localhost';//mongodb://heroku_8h7s37g1:ko07p4amkieo3b2a9l9c026j72@ds047075.mlab.com:47075/heroku_8h7s37g1';
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
@@ -20,11 +20,16 @@ app.use(function(req, res, next) {
   	next();
 });
 
-app.post('/search', function(request, response) {
+app.post('/search', function(request, response, next) {
+        console.log('shree');
         var user = request.body.userID;
+        console.log(user);
         var start = request.body.startpoint;
+        console.log(start);
         var end = request.body.endpoint;
+        console.log(end);
         var food = request.body.foodtype;
+        console.log(food);
         var d = new Date();
         var toInsert = {
                 "userID": user,
@@ -46,7 +51,7 @@ app.post('/search', function(request, response) {
 });
 
 
-app.get('/past', function(request, response) {
+app.get('/past', function(request, response, next) {
         response.set('Content-Type', 'text/html');
         var indexPage = '';
         db.collection('searches', function(er, collection) {
@@ -66,7 +71,7 @@ app.get('/past', function(request, response) {
 });
 
 // views is directory for all template files
-app.set('views', __dirname + '/public');
+app.set('views', __dirname +  '/public');
 app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {

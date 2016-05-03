@@ -14,9 +14,11 @@ var rboxer = new RouteBoxer();
 var distance = .5; // km
 
 var inputs = JSON.parse(localStorage.getItem('inputs'));
+var fbID = JSON.parse(localStorage.getItem('fbID'));
 var center;
 var centered = false;
 var infoWindow = new google.maps.InfoWindow();
+var http = new XMLHttpRequest();
 
 // purp: initializes google maps object
 // calls: getMyLocation
@@ -80,6 +82,8 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     travelMode: google.maps.DirectionsTravelMode.DRIVING,
   };
 
+  sendData();
+
   directionsService.route(directionsRequest, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
@@ -104,14 +108,21 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
 function sendData(){
 
-
-      var http = new XMLHttpRequest();
-
-          var url = "crumbtrail.herokuapp.com/search";
+          //console.log('yo');
+          var url = "http://localhost:3000/search";
+          //console.log(fbID);
+          //console.log(fbID.ID);
           var params = "userID=" + fbID.ID + "&foodtype=" + inputs.preference + "&startpoint="+ inputs.locationFrom 
                                                                                 + "&endpoint=" + inputs.locationTo;
           http.open("POST", url, true);
+          console.log('imhere');
           http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        http.onreadystatechange = function() {
+        if (http.readyState == 4 && http.status == 200) {
+           alert('HELP');
+      }
+    };
           http.send(params);
 }
 
