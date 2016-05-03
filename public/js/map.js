@@ -82,7 +82,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     travelMode: google.maps.DirectionsTravelMode.DRIVING,
   };
 
-  //sendData();
+  sendData();
 
   directionsService.route(directionsRequest, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
