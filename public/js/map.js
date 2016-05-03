@@ -120,7 +120,7 @@ function sendData(){
 
       var http = new XMLHttpRequest();
 
-          var url = "https://crumbtrail.herokuapp.com/search";
+          var url = "crumbtrail.herokuapp.com/search";
           var params = "userID=" + fbID.ID + "&foodtype=" + inputs.preference + "&startpoint="+ inputs.locationFrom 
                                                                                 + "&endpoint=" + inputs.locationTo;
           http.open("POST", url, true);
