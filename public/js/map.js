@@ -109,7 +109,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 function sendData(){
 
           //console.log('yo');
-          var url = "http://localhost:3000/search";
+          var url = "http://crumbtrail.herokuapp.com/search";
           //console.log(fbID);
           //console.log(fbID.ID);
           var params = "userID=" + fbID.ID + "&foodtype=" + inputs.preference + "&startpoint="+ inputs.locationFrom 
