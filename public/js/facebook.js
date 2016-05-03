@@ -47,8 +47,14 @@ function logged_out() {
     "<a onclick='login();' role='button'> Login <span class='glyphicon glyphicon-log-in'></span></a>";    
 }
 
+
+
+
+
 function logged_in() {
     FB.api('/me', function(response) {
+        ID = response.id;
+        localStorage.setItem('fbID', JSON.stringify(ID));
         var d = document.getElementById('fb-login')
         d.className += "dropdown";
         d.innerHTML =
