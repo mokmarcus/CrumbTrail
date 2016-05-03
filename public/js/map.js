@@ -82,7 +82,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     travelMode: google.maps.DirectionsTravelMode.DRIVING,
   };
 
-  sendData();
+  //sendData();
 
   directionsService.route(directionsRequest, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
@@ -109,10 +109,13 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 function sendData(){
 
           //console.log('yo');
-          var url = "http://crumbtrail.herokuapp.com/search";
+          var url = "https://crumbtrail.herokuapp.com/search";
+
           console.log(inputs.preference);
+
           var params = "userID=" + fbID + "&foodtype=" + inputs.preference + "&startpoint="+ inputs.locationFrom 
                                                                                 + "&endpoint=" + inputs.locationTo;
+          console.log(params);
           http.open("POST", url, true);
           console.log('imhere');
           http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
