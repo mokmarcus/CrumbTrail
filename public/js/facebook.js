@@ -62,7 +62,7 @@ function logged_in() {
         + response.name
         + " <span class='caret'></span></a>"
         + "<ul class='dropdown-menu'>"
-        + "<li><a href='crumbtrail.herokuapp.com/past' role='button'> My Past Searches </a></li>"
+        + "<li><a href= '/past' role='button'> My Past Searches </a></li>"
         + "<li role='separator' class='divider'></li>"
         + "<li><a onclick='logout();' role='button'> Logout <span class='glyphicon glyphicon-log-out'></span></a></li>"
         + "</ul>";
