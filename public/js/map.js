@@ -14,7 +14,6 @@ var rboxer = new RouteBoxer();
 var distance = .5; // km
 
 var inputs = JSON.parse(localStorage.getItem('inputs'));
-var fbID = JSON.parse(localStorage.getItem('ID'));
 var center;
 var centered = false;
 var infoWindow = new google.maps.InfoWindow();
@@ -53,6 +52,7 @@ function renderMap() {
   var marker = new google.maps.Marker({
     position: me,
   });
+
   marker.setMap(map);
   findDirections();
 }
@@ -60,10 +60,10 @@ function renderMap() {
 // purp: initializes a google maps DirectionsService and DirectionsRenderer object
 // calls: calculateAndDisplayRoute
 function findDirections() {
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
-    directionsDisplay.setMap(map);
-    calculateAndDisplayRoute (directionsService, directionsDisplay);
+  var directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
+  directionsDisplay.setMap(map);
+  calculateAndDisplayRoute (directionsService, directionsDisplay);
 }
 
 
@@ -72,50 +72,37 @@ function findDirections() {
 // calls: restaurant_initialize
 // WARNING: Current distance set to 1km for debugging purposes
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-    var originLoc = getOrigin();
-    var directionsRequest = {
-        origin: originLoc,
-        destination: inputs.locationTo[0].geometry.location, 
-        travelMode: google.maps.DirectionsTravelMode.DRIVING,
-    };
+  var originLoc = getOrigin();
 
+  var directionsRequest = {
+    origin: originLoc,
+    destination: inputs.locationTo[0].geometry.location, 
+    travelMode: google.maps.DirectionsTravelMode.DRIVING,
+  };
 
-      sendData();
-
-
-    directionsService.route(directionsRequest, function(response, status) {
-        if (status === google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-            // Box the overview path of the first route
-            var path = response.routes[0].overview_path;
-            var boxes = rboxer.box(path, distance);
-             //drawBoxes(boxes); // draws out boxes, only for debugging
-            for (var i = 0; i < boxes.length; i++) {
-              var bounds = boxes[i];
-              // this is where we will perform search over this bounds 
-              restaurant_initialize(bounds);
-            }
-        }
-        else {
-            window.alert('Directions request failed due to ' + status);
-        }
-    });
-}
-
-
-function getOrigin() {
-    if (inputs.locationFrom == null) {
-      return me;
+  directionsService.route(directionsRequest, function(response, status) {
+    if (status === google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+      // Box the overview path of the first route
+      var path = response.routes[0].overview_path;
+      var boxes = rboxer.box(path, distance);
+      //drawBoxes(boxes); // draws out boxes, only for debugging
+      for (var i = 0; i < boxes.length; i++) {
+        var bounds = boxes[i];
+        // this is where we will perform search over this bounds 
+        restaurant_initialize(bounds);
+      }
     }
     else {
-      return inputs.locationFrom[0].geometry.location;
+      window.alert('Directions request failed due to ' + status);
     }
+  });
 }
+
 
 
 
 function sendData(){
-
 
 
       var http = new XMLHttpRequest();
@@ -126,10 +113,18 @@ function sendData(){
           http.open("POST", url, true);
           http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
           http.send(params);
-
-
 }
 
+
+function getOrigin() {
+  if (inputs.locationFrom == null) {
+    return me;
+  }
+  else {
+    return inputs.locationFrom[0].geometry.location;
+  }
+
+}
 
 
 // Draw the array of boxes as polylines on the map, only for debugging
@@ -196,7 +191,7 @@ function processResults(results, status, pagination) {
 
 // args: results array from nearbySearch request
 // purp: loops through the results array from the nearbySearch request, and creates the google
-//       maps marker for earch place
+//       maps marker for each place
 // calls: setWindowContent to set infoWindow content, addInforWindow to add the window to the 
 //        marker.
 function createMarkers(results) {
@@ -209,8 +204,6 @@ function createMarkers(results) {
 
       // Populate results div
       placesList.innerHTML += '<li class="placeItem" onclick=clicked("' + place.place_id + '",this)>' + place.name + '</li>';
-
-
       whenClicked(marker, place);
     }
   }
@@ -254,40 +247,50 @@ function fillInDetails(marker, place)
 // rets: a string
 function setWindowContent(place, place_dets) {
     var place_name = place.name;
+    var content = "<p class=place-title>" + place_name + "</p>";
     // default to not available, fill it details afterwards
     console.log(place_dets);
-    var place_address = "Not Available";
-    var place_price = "Not Available";
-    var place_rating = "Not Available";
+    var place_price = "Not available";
+    var place_rating = "Not available";
+
+    if (place_dets !== null && place_dets.opening_hours.open_now != undefined) {
+      if (place_dets.opening_hours.open_now == true) {
+        content += "<p>Currently Open</p>";
+      }
+      else {
+        content += "<p>Currently Closed</p>";
+      }
+    } 
+
     if (place_dets !== null && place_dets.formatted_address !== undefined) {
       console.log("formatted_address");
-      place_address = place.formatted_address;
+      content += "<p>" + place_dets.formatted_address + "</p>";
     } else if (place.vicinity != undefined) {
-      place_address = place.vicinity;
+      content += "<p>" + place.vicinity; + "</p>";
     }
+
+    if (place_dets !== null && place_dets.formatted_phone_number != undefined) {
+      content += "<p>Phone Number: " + place_dets.formatted_phone_number + "</p>";
+    }
+
     if (place.price_level != undefined) {
       place_price = "";
       for(var i = 0; i < place.price_level; i++) {
         place_price += "&#x1F4B8";
       }
+      content += "<p>Price Level: " + place_price + "</p>";
     }
-    if (place.rating != undefined) {
+    if (place_dets !== null && place_dets.rating != undefined) {
       place_rating = "";
-      for(var i = 0; i < Math.round(place.rating); i++) {
+      for(var i = 0; i < Math.round(place_dets.rating); i++) {
         place_rating += "&#x1F60B";
       }
+      content += "<p>Rating: " + place_rating + "</p>";
     }
-    var content = "<p class=place-title>" + place_name + "</p>";                ;
 
-    if (place.open_now == true) {
-      content += "<p>Currently Open</p>";
+    if (place_dets !== null && place_dets.website != undefined) {
+      content += "<p><a href=" + place_dets.website + " target='_blank'>Website</a></p>";
     }
-    else {
-      content += "<p>Currently Closed</p>";
-    }
-    
-    content += "<p>Address: " + place_address + "</p>" + "<p>Price Level: " + place_price 
-                              + "</p>" + "<p>Rating: " + place_rating + "</p>";
     return content;
 }
 
