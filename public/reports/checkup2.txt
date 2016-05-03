@@ -1,0 +1,26 @@
+COMP20 Semester Group Project: CrumbTrail
+April 15 2016 Update
+
+Homepage, About page and Local Storage-
+
+The general outline of the homepage is more or less completed - the framework I used is bootstrap
+The toolbar html and css can be used for the map page as well
+The location search boxes successfully link to the google places API, and the food preferences search box has a dropdown menu enabled
+Local storage has been set up to get location information from the search boxes
+Next step is to fix the dropdown menu outline and functionality and create an about page.
+
+Facebook Login-
+
+We now have a working Facebook API that just needs to be connected to the ultimate URL of our final website
+Next step is to understand how user’s data is stored and to configure the login API with the final URL. The button also needs to be integrated into the homepage.
+
+Google Maps and Google Location-
+
+WORKING ON having info boxes display the information that we want using the Places API.
+Was able to work out sending multiple getDetail requests using the place ids that came back from an initial nearbySearch request of nearby Chinese restaurants. Was able to print these nearby places to the map. TODO: to include the info that came from the getDetail request for each place in the info windows. 
+Next step is to display places along a specific route using the routeboxer
+
+
+Routeboxer - Shreenath-
+
+Was able to make routing work and display on the browser. Also added box routing and displayed that as well.

@@ -110,3 +110,23 @@ body {
 .disabled {
 	cursor: not-allowed;
 }
+
+@media all and (max-width:720px) {
+        #right-panel{
+		height: 0px;
+  		width: 0px;
+  		background-color:transparent;
+  		border: none;
+        }
+        #search-results-title {
+		color: transparent;
+	}
+	#more {
+		background-color: transparent;
+		border: none;
+		color: transparent;
+	}
+	#new-search-btn {
+		color: transparent;
+	}
+}

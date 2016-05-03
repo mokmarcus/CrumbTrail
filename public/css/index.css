@@ -22,7 +22,6 @@ h1 {
     color: white;
     text-align: center;
     font-size: 40px;
-    
 }
 
 .input-box {
@@ -40,6 +39,14 @@ h1 {
 
 .input-bar {
     margin-top: 7px;
-    margin-bottom: 7px; 
+    margin-bottom: 15px; 
 }
 
+@media all and (max-width:600px) {
+        .software{
+                width:128px;
+                height:240px;
+                background:url(software.png) 
+                0 0px;
+        }
+}
