@@ -14,7 +14,6 @@ var rboxer = new RouteBoxer();
 var distance = .5; // km
 
 var inputs = JSON.parse(localStorage.getItem('inputs'));
-var fbID = JSON.parse(localStorage.getItem('ID'));
 var center;
 var centered = false;
 var infoWindow = new google.maps.InfoWindow();
@@ -53,6 +52,7 @@ function renderMap() {
   var marker = new google.maps.Marker({
     position: me,
   });
+
   marker.setMap(map);
   findDirections();
 }
@@ -72,61 +72,41 @@ function findDirections() {
 // calls: restaurant_initialize
 // WARNING: Current distance set to 1km for debugging purposes
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+  var originLoc = getOrigin();
 
-    var originLoc = getOrigin();
-    var directionsRequest = {
-        origin: originLoc,
-        destination: inputs.locationTo[0].geometry.location, 
-        travelMode: google.maps.DirectionsTravelMode.DRIVING,
-    };
+  var directionsRequest = {
+    origin: originLoc,
+    destination: inputs.locationTo[0].geometry.location, 
+    travelMode: google.maps.DirectionsTravelMode.DRIVING,
+  };
 
-
-      sendData();
-
-
-    directionsService.route(directionsRequest, function(response, status) {
-        if (status === google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-            // Box the overview path of the first route
-            var path = response.routes[0].overview_path;
-            var boxes = rboxer.box(path, distance);
-             //drawBoxes(boxes); // draws out boxes, only for debugging
-            for (var i = 0; i < boxes.length; i++) {
-              var bounds = boxes[i];
-              // this is where we will perform search over this bounds 
-              restaurant_initialize(bounds);
-            }
-        }
-        else {
-            window.alert('Directions request failed due to ' + status);
-        }
-    });
-
+  directionsService.route(directionsRequest, function(response, status) {
+    if (status === google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+      // Box the overview path of the first route
+      var path = response.routes[0].overview_path;
+      var boxes = rboxer.box(path, distance);
+      //drawBoxes(boxes); // draws out boxes, only for debugging
+      for (var i = 0; i < boxes.length; i++) {
+        var bounds = boxes[i];
+        // this is where we will perform search over this bounds 
+        restaurant_initialize(bounds);
+      }
+    }
+    else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
 }
 
 
 function getOrigin() {
-    if (inputs.locationFrom == null) {
-      return me;
-    }
-    else {
-      return inputs.locationFrom[0].geometry.location;
-    }
-}
-
-
-
-function sendData(){
-      var http = new XMLHttpRequest();
-
-          var url = "https://crumbtrail.herokuapp.com/search";
-          var params = "userID=" + fbID.ID + "&foodtype=" + inputs.preference + "&startpoint="+ inputs.locationFrom 
-                                                                                + "&endpoint=" + inputs.locationTo;
-          http.open("POST", url, true);
-          http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-          http.send(params);
-
-
+  if (inputs.locationFrom == null) {
+    return me;
+  }
+  else {
+    return inputs.locationFrom[0].geometry.location;
+  }
 }
 
 
@@ -207,7 +187,6 @@ function createMarkers(results) {
 
       // Populate results div
       placesList.innerHTML += '<li class="placeItem" onclick=clicked("' + place.place_id + '",this)>' + place.name + '</li>';
-
       whenClicked(marker, place);
     }
   }
@@ -251,16 +230,30 @@ function fillInDetails(marker, place)
 // rets: a string
 function setWindowContent(place, place_dets) {
     var place_name = place.name;
-
+    var content = "<p class=place-title>" + place_name + "</p>";
     // default to not available, fill it details afterwards
+    console.log(place_dets);
+    var place_price = "Not available";
+    var place_rating = "Not available";
 
-    var place_address = "Not Available";
-    var place_price = "Not Available";
-    var place_rating = "Not Available";
+    if (place_dets !== null && place_dets.opening_hours.open_now != undefined) {
+      if (place_dets.opening_hours.open_now == true) {
+        content += "<p>Currently Open</p>";
+      }
+      else {
+        content += "<p>Currently Closed</p>";
+      }
+    } 
+
     if (place_dets !== null && place_dets.formatted_address !== undefined) {
-      place_address = place.formatted_address;
+      console.log("formatted_address");
+      content += "<p>" + place_dets.formatted_address + "</p>";
     } else if (place.vicinity != undefined) {
-      place_address = place.vicinity;
+      content += "<p>" + place.vicinity; + "</p>";
+    }
+
+    if (place_dets !== null && place_dets.formatted_phone_number != undefined) {
+      content += "<p>Phone Number: " + place_dets.formatted_phone_number + "</p>";
     }
 
     if (place.price_level != undefined) {
@@ -278,17 +271,9 @@ function setWindowContent(place, place_dets) {
       content += "<p>Rating: " + place_rating + "</p>";
     }
 
-    var content = "<p class=place-title>" + place_name + "</p>";                ;
-
-    if (place.open_now == true) {
-      content += "<p>Currently Open</p>";
+    if (place_dets !== null && place_dets.website != undefined) {
+      content += "<p><a href=" + place_dets.website + " target='_blank'>Website</a></p>";
     }
-    else {
-      content += "<p>Currently Closed</p>";
-    }
-    
-    content += "<p>Address: " + place_address + "</p>" + "<p>Price Level: " + place_price 
-                              + "</p>" + "<p>Rating: " + place_rating + "</p>";
     return content;
 }
 
