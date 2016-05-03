@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 
-var mongoUri = process.env.MONGOLABURI || process.env.MONGOHQ_URL;
+var mongoUri = process.env.MONGOLABURI || process.env.MONGOHQ_URL || 'mongodb://heroku_8h7s37g1:ko07p4amkieo3b2a9l9c026j72@ds047075.mlab.com:47075/heroku_8h7s37g1';
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
