@@ -13,6 +13,7 @@
 
 	       for (var i = 0; i < arr.length; i++) {
 	       		console.log(arr.length);
+	       		console.log(arr);
 	       		var locationTo = JSON.parse(arr[i].startpoint)[0].formatted_address;
 	       		var locationFrom = JSON.parse(arr[i].endpoint)[0].formatted_address;
 	       		var preference = arr[i].foodtype;
