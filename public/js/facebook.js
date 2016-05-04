@@ -52,7 +52,7 @@ function logged_in() {
         localStorage.setItem('fbID', JSON.stringify(fbID));
         var d = document.getElementById('fb-login');
         d.className += "dropdown";
-        if (window.location.href == "http://localhost:3000/index.html") { //CHANGE THIS
+        if (window.location.href == "http://crumbtrail.herokuapp.com/index.html") { //CHANGE THIS
             psLink = "partial/past_searches.html"
         } else {
             psLink = "past_searches.html"
