@@ -62,9 +62,9 @@ function fireRequest() {
         window.alert("Please enter a destination.");
     } else {
         if (inputs.preference == "Anything works!") {
-            inputs.preference = "null";
+            inputs.preference = null;
         } else if (inputs.preference == "I want...") {
-            inputs.preference = "null";
+            inputs.preference = null;
         }
         localStorage.setItem('inputs', JSON.stringify(inputs));
         window.location.href = 'partial/map.html';

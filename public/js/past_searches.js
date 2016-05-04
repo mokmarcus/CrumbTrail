@@ -10,7 +10,7 @@
 	http.onreadystatechange = function() {
 	    if (http.readyState == 4 && http.status == 200) {
 	    	var arr = JSON.parse(http.responseText);
-	       for (var i = 0; i < arr.length; i++) {
+	       for (var i = arr.length - 1; i >= 0; i--) {
 	       		var locationFrom = arr[i].startpoint;
 	       		var locationTo = arr[i].endpoint;
 	       		var preference = arr[i].foodtype;
