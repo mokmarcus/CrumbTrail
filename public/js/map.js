@@ -279,6 +279,12 @@ function setWindowContent(place, place_dets) {
     }
   } 
 
+  if (place_dets != null && place_dets.opening_hours.weekday_text != undefined) {
+    var d = new Date();
+    var n = d.getDay();
+    content += "<p>Hours: " + place_dets.opening_hours.weekday_text[n] + "</p>";
+  }
+
   if (place_dets !== null && place_dets.formatted_address !== undefined) {
     content += "<p>" + place_dets.formatted_address + "</p>";
   } else if (place.vicinity != undefined) {
