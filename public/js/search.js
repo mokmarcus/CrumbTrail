@@ -60,15 +60,17 @@ function fireRequest() {
     inputs.preference = inputPref.options[inputPref.selectedIndex].text; 
     if (inputs.locationTo == null) {
         window.alert("Please enter a destination.");
-    } else if (inputs.preference == "Anything works!") {
-        inputs.preference = "null";
-    } else if (inputs.preference == "I want...") {
-        inputs.preference = "null";
     } else {
-        localStorage.setItem('inputs', JSON.stringify(inputs));
-        window.location.href = 'partial/map.html';
-    } 
-}
+        if (inputs.preference == "Anything works!") {
+            inputs.preference = "null";
+        } else if (inputs.preference == "I want...") {
+            inputs.preference = "null";
+        } else {
+            localStorage.setItem('inputs', JSON.stringify(inputs));
+            window.location.href = 'partial/map.html';
+        } 
+    }
+} 
 
 function stopEvent(input) {
     google.maps.event.addDomListener(input, 'keydown', function(e) { 

@@ -45,12 +45,12 @@ function getMyLocation() {
 // purp: renders map, panning to user
 // calls: findDirections
 function renderMap() {
-  // me = new google.maps.LatLng(myLat, myLng);
-  // map.panTo(me);
-  // var marker = new google.maps.Marker({
-  //   position: me,
-  // });
-  // marker.setMap(map);
+  me = new google.maps.LatLng(myLat, myLng);
+  map.panTo(me);
+  var marker = new google.maps.Marker({
+    position: me,
+  });
+  marker.setMap(map);
   findDirections();
 }
 
@@ -99,10 +99,11 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
 function sendData(){
-  var url = "http://localhost:3000/search";
+   // var url = "http://localhost:3000/search"; // CHANGE AS NEEDED
+  var url = "http://crumbtrail.herokuapp.com/search";
   var params = "userID=" + fbID + "&foodtype=" + inputs.preference 
-              + "&startpoint="+ JSON.stringify(inputs.locationFrom) 
-              + "&endpoint=" + JSON.stringify(inputs.locationTo); 
+              + "&startpoint="+ inputs.locationFrom[0].formatted_address 
+              + "&endpoint=" + inputs.locationTo[0].formatted_address; 
   http.open("POST", url, true);
   http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   http.send(params);
@@ -222,7 +223,6 @@ function fillInDetails(marker, place)
   var request = {
       placeId: place.place_id 
   };
-
   // purp: handler for getDetails service call
   // args: place details object and status of request response 
    

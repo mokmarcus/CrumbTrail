@@ -52,7 +52,8 @@ function logged_in() {
         localStorage.setItem('fbID', JSON.stringify(fbID));
         var d = document.getElementById('fb-login');
         d.className += "dropdown";
-        if (window.location.href == "http://crumbtrail.herokuapp.com/index.html" || window.location.href == "http://localhost:3000/index.html") { 
+        if (window.location.href == "http://crumbtrail.herokuapp.com/index.html" || window.location.href == "http://crumbtrail.herokuapp.com"
+            || window.location.href == "http://localhost:3000/index.html" || window.location.href == "http://localhost:3000/") { 
             psLink = "partial/past_searches.html"
         } else {
             psLink = "past_searches.html"
