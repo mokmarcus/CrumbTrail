@@ -34,11 +34,11 @@ app.post('/search', function(request, response) {
     };
     db.collection('searches', function(error, coll) {
         var id = coll.insert(toInsert, function(error, saved) {
-            if (error) {
-                response.sendStatus(500);
+            if (!error) {
+                response.sendStatus(200);
             }
             else {
-                response.sendStatus(200);
+                response.sendStatus(500);
             }
         });
     });
