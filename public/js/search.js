@@ -65,10 +65,8 @@ function fireRequest() {
             inputs.preference = "null";
         } else if (inputs.preference == "I want...") {
             inputs.preference = "null";
-        } else {
-            localStorage.setItem('inputs', JSON.stringify(inputs));
-            window.location.href = 'partial/map.html';
-        } 
+        }
+        localStorage.setItem('inputs', JSON.stringify(inputs));
     }
 } 
 

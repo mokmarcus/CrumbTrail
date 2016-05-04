@@ -1,6 +1,6 @@
 // $(document).ready(function() {
 	var http = new XMLHttpRequest();
-	// var fbID = JSON.parse(localStorage.getItem('fbID'));
+	var fbID = JSON.parse(localStorage.getItem('fbID'));
 	var url = "http://crumbtrail.herokuapp.com/past?userID=" + fbID; //CHANGE THIS URL
 	var url = "http://localhost:3000/past?userID=" + fbID;
 	http.open("GET", url, true);
