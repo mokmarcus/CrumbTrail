@@ -21,22 +21,22 @@ app.use(function(req, res, next) {
 });
 
 app.post('/search', function(request, response, next) {
-        console.log('shree');
+       // console.log('shree');
         var user = request.body.userID;
-        console.log(user);
+        //console.log(user);
         var start = request.body.startpoint;
-        console.log(start);
+       // console.log(start);
         var end = request.body.endpoint;
-        console.log(end);
+//console.log(end);
         var food = request.body.foodtype;
-        console.log(food);
-        var d = new Date();
+       // console.log(food);
+        //var d = new Date();
         var toInsert = {
                 "userID": user,
                 "foodtype": food,
-                "startpoint": start,
-                "endpoint" : end,
-                "date" : d
+                //"startpoint": start,
+                //"endpoint" : end,
+               // "date" : d
         };
         db.collection('searches', function(error, coll) {
                 var id = coll.insert(toInsert, function(error, saved) {
@@ -59,7 +59,8 @@ app.get('/past', function(request, response, next) {
                         if (!err) {
                                 indexPage += "<!DOCTYPE HTML><html><head><title>Past Searches</title></head><body><h1>Past Travels</h1>";
                                 for (var count = 0; count < cursor.length; count++) {
-                                        indexPage += "<p>Search from " + cursor[count].startpoint + "to" + cursor[count].endpoint + "</p>";
+                                        indexPage += "<p>Search for" + cursor[count].foodtype
+                                        /*+ cursor[count].startpoint + "to" + cursor[count].endpoint +*/ + "</p>";
                                 }
                                 indexPage += "</body></html>"
                                 response.send(indexPage);

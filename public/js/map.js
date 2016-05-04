@@ -113,8 +113,8 @@ function sendData(){
           var url = "http://crumbtrail.herokuapp.com/search";
        
 
-          var params = "userID=" + fbID + "&foodtype=" + inputs.preference + "&startpoint="+ inputs.locationFrom 
-                                                                                + "&endpoint=" + inputs.locationTo;
+          var params = "userID=" + fbID + "&foodtype=" + inputs.preference; /* + "&startpoint="+ inputs.locationFrom 
+                                                                                + "&endpoint=" + inputs.locationTo; */
           console.log(params);
           http.open("POST", url, true);
           console.log('imhere');
