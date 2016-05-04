@@ -100,10 +100,36 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
 function sendData(){
    // var url = "http://localhost:3000/search"; // CHANGE AS NEEDED
-  var url = "http://crumbtrail.herokuapp.com/search";
-  var params = "userID=" + fbID + "&foodtype=" + inputs.preference 
-              + "&startpoint="+ inputs.locationFrom[0].formatted_address 
-              + "&endpoint=" + inputs.locationTo[0].formatted_address; 
+   var url = "http://crumbtrail.herokuapp.com/search";
+  var startpoint;
+  var endpoint;
+  var foodtype;
+
+  if (inputs.locationFrom === null) {
+    startingpoint = "Not Available";
+  } else if (inputs.locationFrom[0].formatted_address === null) {
+    startingpoint = "Not Available";
+  } else {
+    startingpoint = inputs.locationFrom[0].formatted_address;
+  }
+
+  if(inputs.locationTo === null) {
+    endpoint = "Not Available";
+  } else if (inputs.locationTo[0].formatted_address === null) {
+    endpoint = "Not Available";
+  } else {
+    endpoint = inputs.locationTo[0].formatted_address;
+  }
+  
+  if (inputs.preference == null) {
+    foodtype = "Any";
+  } else {
+    foodtype = inputs.preference; 
+  }
+
+  var params = "userID=" + fbID + "&foodtype=" + foodtype 
+              + "&startpoint=" +  startingpoint
+              + "&endpoint=" + endpoint; 
   http.open("POST", url, true);
   http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   http.send(params);
