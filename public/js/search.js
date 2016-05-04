@@ -67,6 +67,7 @@ function fireRequest() {
             inputs.preference = "null";
         }
         localStorage.setItem('inputs', JSON.stringify(inputs));
+        window.location.href = 'partial/map.html';
     }
 } 
 
