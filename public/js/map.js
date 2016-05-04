@@ -45,17 +45,12 @@ function getMyLocation() {
 // purp: renders map, panning to user
 // calls: findDirections
 function renderMap() {
-  me = new google.maps.LatLng(myLat, myLng);
-
-
-  map.panTo(me);
-
-
-  var marker = new google.maps.Marker({
-    position: me,
-  });
-
-  marker.setMap(map);
+  // me = new google.maps.LatLng(myLat, myLng);
+  // map.panTo(me);
+  // var marker = new google.maps.Marker({
+  //   position: me,
+  // });
+  // marker.setMap(map);
   findDirections();
 }
 
@@ -103,29 +98,14 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   });
 }
 
-
-
-
 function sendData(){
-
-          //console.log('yo');
-
-          var url = "http://crumbtrail.herokuapp.com/search";
-       
-
-          var params = "userID=" + fbID + "&foodtype=" + inputs.preference; /* + "&startpoint="+ inputs.locationFrom 
-                                                                                + "&endpoint=" + inputs.locationTo; */
-          console.log(params);
-          http.open("POST", url, true);
-          console.log('imhere');
-          http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        http.onreadystatechange = function() {
-        if (http.readyState == 4 && http.status == 200) {
-           alert('HELP');
-      }
-    };
-          http.send(params);
+  var url = "http://localhost:3000/search";
+  var params = "userID=" + fbID + "&foodtype=" + inputs.preference 
+              + "&startpoint="+ JSON.stringify(inputs.locationFrom) 
+              + "&endpoint=" + JSON.stringify(inputs.locationTo); 
+  http.open("POST", url, true);
+  http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  http.send(params);
 }
 
 
@@ -180,7 +160,7 @@ function processResults(results, status, pagination) {
     map.panBy(-100, 0);
   }
   centered = true;
-  
+
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     
     createMarkers(results);
@@ -239,72 +219,69 @@ function whenClicked(marker, place) {
 //
 function fillInDetails(marker, place) 
 {
-    var request = {
-        placeId: place.place_id 
-    };
+  var request = {
+      placeId: place.place_id 
+  };
 
-    // purp: handler for getDetails service call
-    // args: place details object and status of request response 
-     
-    service.getDetails(request, function (place_dets, status) {
-        console.log(status);
-        var marker = markerArray[place.place_id];
-        var message = setWindowContent(place, place_dets);
-        infoWindow.setContent(message);
-        infoWindow.open(map, marker);
-        marker.setMap(map);  
-    });
+  // purp: handler for getDetails service call
+  // args: place details object and status of request response 
+   
+  service.getDetails(request, function (place_dets, status) {
+    var marker = markerArray[place.place_id];
+    var message = setWindowContent(place, place_dets);
+    infoWindow.setContent(message);
+    infoWindow.open(map, marker);
+    marker.setMap(map);  
+  });
 }
 
 // purp: sets up info window content html string
 // rets: a string
 function setWindowContent(place, place_dets) {
-    var place_name = place.name;
-    var content = "<p class=place-title>" + place_name + "</p>";
-    // default to not available, fill it details afterwards
-    console.log(place_dets);
-    var place_price = "Not available";
-    var place_rating = "Not available";
+  var place_name = place.name;
+  var content = "<p class=place-title>" + place_name + "</p>";
+  // default to not available, fill it details afterwards
+  var place_price = "Not available";
+  var place_rating = "Not available";
 
-    if (place_dets !== null && place_dets.opening_hours.open_now != undefined) {
-      if (place_dets.opening_hours.open_now == true) {
-        content += "<p>Currently Open</p>";
-      }
-      else {
-        content += "<p>Currently Closed</p>";
-      }
-    } 
+  if (place_dets !== null && place_dets.opening_hours.open_now != undefined) {
+    if (place_dets.opening_hours.open_now == true) {
+      content += "<p>Currently Open</p>";
+    }
+    else {
+      content += "<p>Currently Closed</p>";
+    }
+  } 
 
-    if (place_dets !== null && place_dets.formatted_address !== undefined) {
-      console.log("formatted_address");
-      content += "<p>" + place_dets.formatted_address + "</p>";
-    } else if (place.vicinity != undefined) {
-      content += "<p>" + place.vicinity; + "</p>";
-    }
+  if (place_dets !== null && place_dets.formatted_address !== undefined) {
+    content += "<p>" + place_dets.formatted_address + "</p>";
+  } else if (place.vicinity != undefined) {
+    content += "<p>" + place.vicinity; + "</p>";
+  }
 
-    if (place_dets !== null && place_dets.formatted_phone_number != undefined) {
-      content += "<p>Phone Number: " + place_dets.formatted_phone_number + "</p>";
-    }
+  if (place_dets !== null && place_dets.formatted_phone_number != undefined) {
+    content += "<p>Phone Number: " + place_dets.formatted_phone_number + "</p>";
+  }
 
-    if (place.price_level != undefined) {
-      place_price = "";
-      for(var i = 0; i < place.price_level; i++) {
-        place_price += "&#x1F4B8";
-      }
-      content += "<p>Price Level: " + place_price + "</p>";
+  if (place.price_level != undefined) {
+    place_price = "";
+    for(var i = 0; i < place.price_level; i++) {
+      place_price += "&#x1F4B8";
     }
-    if (place_dets !== null && place_dets.rating != undefined) {
-      place_rating = "";
-      for(var i = 0; i < Math.round(place_dets.rating); i++) {
-        place_rating += "&#x1F60B";
-      }
-      content += "<p>Rating: " + place_rating + "</p>";
+    content += "<p>Price Level: " + place_price + "</p>";
+  }
+  if (place_dets !== null && place_dets.rating != undefined) {
+    place_rating = "";
+    for(var i = 0; i < Math.round(place_dets.rating); i++) {
+      place_rating += "&#x1F60B";
     }
+    content += "<p>Rating: " + place_rating + "</p>";
+  }
 
-    if (place_dets !== null && place_dets.website != undefined) {
-      content += "<p><a href=" + place_dets.website + " target='_blank'>Website</a></p>";
-    }
-    return content;
+  if (place_dets !== null && place_dets.website != undefined) {
+    content += "<p><a href=" + place_dets.website + " target='_blank'>Website</a></p>";
+  }
+  return content;
 }
 
 // purp: deals with page response when a marker is clicked

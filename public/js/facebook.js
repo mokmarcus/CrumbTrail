@@ -5,10 +5,8 @@ window.fbAsyncInit = function() {
         xfbml      : true,
         version    : 'v2.6'
     });
-
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
-            //console.log(response.authResponse.accessToken);
             logged_in();
         }
         else {
@@ -47,23 +45,24 @@ function logged_out() {
     "<a onclick='login();' role='button'> Login <span class='glyphicon glyphicon-log-in'></span></a>";    
 }
 
-
-
-
-
 function logged_in() {
     FB.api('/me', function(response) {
-        fbID = response.id;
-
+        var psLink;
+        var fbID = response.id;
         localStorage.setItem('fbID', JSON.stringify(fbID));
-        var d = document.getElementById('fb-login')
+        var d = document.getElementById('fb-login');
         d.className += "dropdown";
+        if (window.location.href == "http://localhost:3000/index.html") { //CHANGE THIS
+            psLink = "partial/past_searches.html"
+        } else {
+            psLink = "past_searches.html"
+        }
         d.innerHTML =
         "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'> "
         + response.name
         + " <span class='caret'></span></a>"
         + "<ul class='dropdown-menu'>"
-        + "<li><a href= '/past' role='button'> My Past Searches </a></li>"
+        + "<li><a href=' " + psLink + " ' role='button'> My Past Searches </a></li>"
         + "<li role='separator' class='divider'></li>"
         + "<li><a onclick='logout();' role='button'> Logout <span class='glyphicon glyphicon-log-out'></span></a></li>"
         + "</ul>";

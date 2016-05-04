@@ -6,8 +6,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-
-var mongoUri = process.env.MONGOLABURI || process.env.MONGOHQ_URL || 'mongodb:local/mongodb://heroku_8h7s37g1:ko07p4amkieo3b2a9l9c026j72@ds047075.mlab.com:47075/heroku_8h7s37g1';
+var mongoUri = process.env.MONGOLABURI || process.env.MONGOHQ_URL || 'mongodb://heroku_8h7s37g1:ko07p4amkieo3b2a9l9c026j72@ds047075.mlab.com:47075/heroku_8h7s37g1';
 var MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 	db = databaseConnection;
@@ -20,55 +19,41 @@ app.use(function(req, res, next) {
   	next();
 });
 
-app.post('/search', function(request, response, next) {
-       // console.log('shree');
-        var userID = parseFloat(request.body.userID);
-        //console.log(user);
-        //var start = request.body.startpoint;
-       // console.log(start);
-        //var end = request.body.endpoint;
-//console.log(end);
-        var foodtype = request.body.foodtype;
-       // console.log(food);
-        //var d = new Date();
-        var toInsert = {
-                "userID": userID,
-                "foodtype": foodtype,
-                //"startpoint": start,
-                //"endpoint" : end,
-               // "date" : d
-        };
-        db.collection('searches', function(error, coll) {
-                var id = coll.insert(toInsert, function(error, saved) {
-                        if (error) {
-                                response.send(500);
-                        }
-                        else {
-                                response.send(200);
-                        }
-            });
+app.post('/search', function(request, response) {
+    var userID = parseFloat(request.body.userID);
+    var start = request.body.startpoint;
+    var end = request.body.endpoint;
+    var foodtype = request.body.foodtype;
+    var d = new Date();
+    var toInsert = {
+        "userID": userID,
+        "foodtype": foodtype,
+        "startpoint": start,
+        "endpoint" : end,
+        "date" : d
+    };
+    db.collection('searches', function(error, coll) {
+        var id = coll.insert(toInsert, function(error, saved) {
+            if (error) {
+                response.sendStatus(500);
+            }
+            else {
+                response.sendStatus(200);
+            }
         });
+    });
 });
 
-
-app.get('/past', function(request, response, next) {
-        response.set('Content-Type', 'text/html');
-        var indexPage = '';
-        db.collection('searches', function(er, collection) {
-                collection.find({"userID": request.body.userID}).toArray(function(err, cursor) {
-                        if (!err) {
-                                indexPage += "<!DOCTYPE HTML><html><head><title>Past Searches</title></head><body><h1>Past Travels</h1>";
-                                for (var count = 0; count < cursor.length; count++) {
-                                        indexPage += "<p>Search for" + cursor[count].foodtype
-                                        /*+ cursor[count].startpoint + "to" + cursor[count].endpoint +*/ + "</p>";
-                                }
-                                indexPage += "</body></html>"
-                                response.send(indexPage);
-                        } else {
-                                response.send('<!DOCTYPE HTML><html><head><title>Recent Searches</title></head><body><h1>Whoops, something went terribly wrong!</h1></body></html>');
-                        }
-                });
-        });
+app.get('/past', function(request, response) {
+    db.collection('searches', function(er, collection) {
+            collection.find({userID: parseFloat(request.query.userID)}).toArray(function(err, cursor) {
+                if (!err) {
+                    response.send(cursor);
+                } else {
+                    response.sendStatus(500);
+                }
+            });
+    });
 });
 
 // views is directory for all template files

@@ -27,8 +27,6 @@ $(document).ready(function() {
     });
     stopEvent(inputFrom);
 
-
-
     var inputTo = document.getElementById('input-to');
     var searchBoxTo = new google.maps.places.SearchBox(inputTo);
     searchBoxTo.addListener('places_changed', function() {
@@ -40,10 +38,10 @@ $(document).ready(function() {
     });
     stopEvent(inputTo);
 
-    $('#input-pref').change(function(event) {
-        var inputPref = document.getElementById('input-pref');
-        inputs.preference = inputPref.options[inputPref.selectedIndex].text;
-    });
+    // $('#input-pref').change(function(event) {
+    //     var inputPref = document.getElementById('input-pref');
+    //     inputs.preference = inputPref.options[inputPref.selectedIndex].text;
+    // });
 
     //go to maps
     $('#search').on('click', function(event) {
@@ -58,10 +56,14 @@ $(document).ready(function() {
 });
 
 function fireRequest() {
+    var inputPref = document.getElementById('input-pref');
+    inputs.preference = inputPref.options[inputPref.selectedIndex].text; 
     if (inputs.locationTo == null) {
         window.alert("Please enter a destination.");
     } else if (inputs.preference == "Anything works!") {
-        inputs.preference = null;
+        inputs.preference = "null";
+    } else if (inputs.preference == "I want...") {
+        inputs.preference = "null";
     } else {
         localStorage.setItem('inputs', JSON.stringify(inputs));
         window.location.href = 'partial/map.html';
