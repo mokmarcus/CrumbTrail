@@ -24,9 +24,9 @@ app.post('/search', function(request, response, next) {
        // console.log('shree');
         var user = request.body.userID;
         //console.log(user);
-        var start = request.body.startpoint;
+        //var start = request.body.startpoint;
        // console.log(start);
-        var end = request.body.endpoint;
+        //var end = request.body.endpoint;
 //console.log(end);
         var food = request.body.foodtype;
        // console.log(food);
