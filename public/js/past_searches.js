@@ -16,8 +16,8 @@
 	       		var preference = arr[i].foodtype;
 	       		var date = arr[i].date;
 				html += "<div class='col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 box'>";
-				html += "<p>Starting point: " + locationTo + "</p>";
-				html += "<p>Destination: " + locationFrom + "</p>";
+				html += "<p>Starting point: " + locationFrom + "</p>";
+				html += "<p>Destination: " + locationTo + "</p>";
 				html += "<p>Food Preference: " + preference + "</p>";
 				html += "<p>Search Date: " + date + "</p>";
 				html += "</div>";
