@@ -12,9 +12,9 @@
 	    	var arr = JSON.parse(http.responseText);
 
 	       for (var i = 0; i < arr.length; i++) {
+	       		console.log(arr.length);
 	       		var locationTo = JSON.parse(arr[i].startpoint)[0].formatted_address;
 	       		var locationFrom = JSON.parse(arr[i].endpoint)[0].formatted_address;
-	       		console.log(locationFrom);
 	       		var preference = arr[i].foodtype;
 	       		var date = arr[i].date;
 				html += "<div class=\"col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 box\">";
