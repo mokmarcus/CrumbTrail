@@ -22,18 +22,18 @@ app.use(function(req, res, next) {
 
 app.post('/search', function(request, response, next) {
        // console.log('shree');
-        var user = request.body.userID;
+        var userID = parseFloat(request.body.userID);
         //console.log(user);
         //var start = request.body.startpoint;
        // console.log(start);
         //var end = request.body.endpoint;
 //console.log(end);
-        var food = request.body.foodtype;
+        var foodtype = request.body.foodtype;
        // console.log(food);
         //var d = new Date();
         var toInsert = {
-                "userID": user,
-                "foodtype": food,
+                "userID": userID,
+                "foodtype": foodtype,
                 //"startpoint": start,
                 //"endpoint" : end,
                // "date" : d
